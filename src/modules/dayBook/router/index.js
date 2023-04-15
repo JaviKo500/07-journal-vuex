@@ -7,5 +7,10 @@ export default {
             name: 'no-entry',
             component: () => import(/* webpackChunkName: "NoEntry" */ '@/modules/dayBook/views/NoEntrySelected'),
         },
+        {
+            path: ':id',
+            name: 'entry',
+            component: () => import(/* webpackChunkName: "EntryView" */ '@/modules/dayBook/views/EntryView'),
+        },
     ]
 }
