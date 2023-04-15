@@ -20,7 +20,7 @@
   <div class="d-flex flex-column px-3 h-75">
     <textarea name="" id="" cols="30" rows="10" placeholder="what happened today?"></textarea>
   </div>
-  <Fab/>
+  <Fab :icon="'fa-floppy-disk'" />
   <img 
     class="img-thumbnail"
     alt="entry-picture" 
