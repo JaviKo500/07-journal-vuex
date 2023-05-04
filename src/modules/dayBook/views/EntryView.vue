@@ -26,7 +26,7 @@
                 v-model="entry.text"></textarea>
         </div>
     </template>
-  <Fab :icon="'fa-floppy-disk'" />
+  <Fab :icon="'fa-floppy-disk'" @on:click="saveEntry" />
   <img 
     class="img-thumbnail"
     alt="entry-picture" 
@@ -73,6 +73,9 @@ export default {
             if( !entry ) return this.$router.push({ name: 'no-entry' })
             this.entry = entry
             console.log(entry)
+        },
+        async saveEntry(){
+            console.log('save..')
         }
     },
     created(){
