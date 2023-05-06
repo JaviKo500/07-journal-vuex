@@ -8,12 +8,16 @@
             </div>
             <div class="">
                 <input type="file"
-                    @change="onSelectedImage">
+                    @change="onSelectedImage"
+                    ref="imageSelector"
+                    accept="image/png, image/jpeg"
+                    v-show="false">
                 <button v-if="entry.id" class="btn btn-danger mx-2" @click="onDeleteEntry">
                     Delete 
                     <i class="fa fa-trash-alt"></i>
                 </button>
-                <button class="btn btn-primary mx-2">
+                <button class="btn btn-primary mx-2"
+                    @click="onSelectImage">
                     image
                     <i class="fa fa-upload"></i>
                 </button>
@@ -139,6 +143,9 @@ export default {
             fr.onload = () => this.localImage = fr.result
             fr.readAsDataURL( file )
 
+        },
+        onSelectImage() {
+            this.$refs.imageSelector.click()
         }
     },
     created(){
