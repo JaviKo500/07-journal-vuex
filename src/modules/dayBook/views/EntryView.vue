@@ -7,6 +7,8 @@
                 <span class="mx-2 fs-3 fw-light">{{ year }}</span>
             </div>
             <div class="">
+                <input type="file"
+                    @change="onSelectedImage">
                 <button v-if="entry.id" class="btn btn-danger mx-2" @click="onDeleteEntry">
                     Delete 
                     <i class="fa fa-trash-alt"></i>
@@ -27,10 +29,15 @@
         </div>
     </template>
   <Fab :icon="'fa-floppy-disk'" @on:click="saveEntry" />
-  <img 
+  <!-- <img 
     class="img-thumbnail"
     alt="entry-picture" 
-    src="https://iso.500px.com/wp-content/uploads/2014/07/big-one.jpg">
+    src="https://iso.500px.com/wp-content/uploads/2014/07/big-one.jpg"> -->
+    <img 
+        class="img-thumbnail"
+        alt="entry-picture" 
+        v-if="localImage"
+        :src="localImage">
 </template> 
 
 <script>
@@ -52,7 +59,9 @@ export default {
     },
     data() {
         return {
-            entry: null
+            entry: null,
+            localImage: null,
+            file: null
         }
     },
     computed: {
@@ -115,6 +124,21 @@ export default {
                 
                 Swal.fire( 'Entry is deleted', '', 'success' )
             }
+        },
+        onSelectedImage ( event ) {
+            const file = event?.target?.files[0]
+            console.log( file )
+            
+            if ( !file ) {
+                this.localImage = null
+                this.file = null
+                return
+            }
+            this.file = file
+            const fr = new FileReader()
+            fr.onload = () => this.localImage = fr.result
+            fr.readAsDataURL( file )
+
         }
     },
     created(){
