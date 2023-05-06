@@ -8,6 +8,14 @@
         v-model="term">
     </div>
 
+    <div class="mt-2 d-flex flex-column" >
+      <button type="button" class="btn btn-primary mx-3"
+        @click="$router.push({ name: 'entry', params: { id: 'new'} })">
+        <i class="fa fa-plus-circle"></i>
+        New entry
+      </button>
+    </div>
+
     <div class="entry-scroll-area">
         <Entry  v-for="entry in entriesByTerm" :key="entry.id" :entry="entry" />
     </div>
