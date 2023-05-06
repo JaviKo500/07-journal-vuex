@@ -4,9 +4,9 @@ export const setEntries = ( state, entries ) => {
 }
 
 export const updateEntry = ( state, updatedEntry) => {
-    state.entries = state.entries.map( entry => entry.id === updatedEntry.id ? updatedEntry : entry );
+    state.entries = state.entries.map( entry => entry.id === updatedEntry.id ? updatedEntry : entry )
 }
 
-export const addEntry = ( /*state*/ ) => {
-    
+export const addEntry = ( state, entry ) => {
+    state.entries = [ entry, ...state.entries ]
 }
