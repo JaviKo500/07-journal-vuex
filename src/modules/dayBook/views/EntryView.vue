@@ -33,10 +33,11 @@
         </div>
     </template>
   <Fab :icon="'fa-floppy-disk'" @on:click="saveEntry" />
-  <!-- <img 
+  <img 
     class="img-thumbnail"
+    v-if="entry.picture && !localImage"
     alt="entry-picture" 
-    src="https://iso.500px.com/wp-content/uploads/2014/07/big-one.jpg"> -->
+    :src="entry.picture">
     <img 
         class="img-thumbnail"
         alt="entry-picture" 
@@ -47,6 +48,8 @@
 <script>
 import { defineAsyncComponent } from 'vue'
 import getDayMonthYear from '../helpers/getDayMonthYear';
+import uploadImage from '../helpers/uploadImage';
+
 import { mapActions, mapGetters } from 'vuex';
 
 import Swal from 'sweetalert2'
@@ -101,12 +104,18 @@ export default {
                 allowOutsideClick: false,
             })
             Swal.showLoading()
+
+            const picture = await uploadImage( this.file  )
             if ( this.entry.id ) {
+                this.entry.picture = picture
                 await this.updateEntry( this.entry )
             } else {
+                this.entry.picture = picture
                 const id = await this.createEntry( this.entry )
                 this.$router.push({ name: 'entry', params: { id } })
             }
+            this.file = null
+            this.localImage = null
             Swal.fire( 'Saved', 'Entry register success', 'success' )
         },
         async onDeleteEntry() {
@@ -130,9 +139,7 @@ export default {
             }
         },
         onSelectedImage ( event ) {
-            const file = event?.target?.files[0]
-            console.log( file )
-            
+            const file = event?.target?.files[0]            
             if ( !file ) {
                 this.localImage = null
                 this.file = null
